@@ -76,5 +76,16 @@ namespace Cubergy.Player
             if (_form0Bobbing != null)
                 _form0Bobbing.enabled = CurrentForm == PlayerForm.Form0;
         }
+        public void ForceForm(PlayerForm form, bool resetEnergy)
+        {
+            CurrentForm = form;
+
+            if (resetEnergy && _wallet != null)
+                _wallet.ResetToZero();
+
+            ApplyVisuals();
+            FormChanged?.Invoke(CurrentForm);
+        }
+
     }
 }
