@@ -1,3 +1,8 @@
+## License
+
+This project is proprietary.
+All rights reserved.
+
 ## GDD (MVP) — RU
 ## Cubergy
 
