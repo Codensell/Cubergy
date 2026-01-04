@@ -1544,6 +1544,7 @@ GameObject:
   - component: {fileID: 1407181533}
   - component: {fileID: 1407181534}
   - component: {fileID: 1407181535}
+  - component: {fileID: 1407181536}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1654,6 +1655,25 @@ MonoBehaviour:
   _form0Y: 0
   _form1Y: -0.175
   _form2Y: -0.16
+--- !u!114 &1407181536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407181529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 640016caa788b40b3b1821c970b17988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubergy.Player.ChargedShot
+  _forms: {fileID: 1407181534}
+  _muzzle: {fileID: 1864592071}
+  _projectilePrefab: {fileID: 2363393955643508246, guid: 7059cbbe128784241a49e5c334aa0e1a, type: 3}
+  _chargeTime: 1.5
+  _minSpeed: 12
+  _maxSpeed: 28
+  _spawnForwardOffset: 0.35
 --- !u!1001 &1456835717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2268,6 +2288,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8177993735023119883, guid: 92f00b1d12bcb457c8b707541a861fd2, type: 3}
   m_PrefabInstance: {fileID: 571151693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1864592071 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 777567456486716346, guid: 4f1e5a7ad0c0642399b058ccc73bcbb3, type: 3}
+  m_PrefabInstance: {fileID: 341136752}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1865620590
 PrefabInstance:
