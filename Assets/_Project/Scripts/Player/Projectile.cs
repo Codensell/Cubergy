@@ -16,14 +16,20 @@ namespace Cubergy.Player
         private float _t;
         private int _damage;
 
-        public void Init(float power01)
+        public void Init(float power01, float damageMultiplier = 1f)
         {
             float p = Mathf.Clamp01(power01);
 
             float s = Mathf.Lerp(_minScale, _maxScale, p);
             transform.localScale = Vector3.one * s;
 
-            _damage = Mathf.RoundToInt(Mathf.Lerp(_damageMin, _damageMax, p));
+            int baseDamage = Mathf.RoundToInt(Mathf.Lerp(_damageMin, _damageMax, p));
+            if (baseDamage < 1)
+                baseDamage = 1;
+
+            float m = damageMultiplier <= 0f ? 1f : damageMultiplier;
+
+            _damage = Mathf.RoundToInt(baseDamage * m);
             if (_damage < 1)
                 _damage = 1;
         }

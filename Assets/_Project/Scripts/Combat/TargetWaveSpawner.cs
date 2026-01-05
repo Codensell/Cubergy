@@ -46,7 +46,7 @@ namespace Cubergy.Combat
             _alive.Clear();
         }
 
-        private void OnTargetDied(TargetHealth t)
+        private void OnTargetDied(TargetHealth t, DamageInstigator instigator)
         {
             if (t != null)
                 t.Died -= OnTargetDied;

@@ -10,6 +10,8 @@ namespace Cubergy.Player
 
         [Header("Gravity")]
         [SerializeField] private float _gravity = -20f;
+        public float VerticalVelocity => _velocity.y;
+        public bool IsGrounded => _controller != null && _controller.isGrounded;
 
         private CharacterController _controller;
         private Vector3 _velocity;
@@ -37,7 +39,16 @@ namespace Cubergy.Player
             Vector3 motion = input * (_moveSpeed * Time.deltaTime);
             _controller.Move(motion);
         }
+        public void Jump(float jumpHeight)
+        {
+            if (!_controller.isGrounded)
+                return;
 
+            if (jumpHeight <= 0f)
+                return;
+
+            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * _gravity);
+        }
 
         private void ApplyGravity()
         {
@@ -47,5 +58,10 @@ namespace Cubergy.Player
             _velocity.y += _gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
         }
+        public void SetMoveSpeed(float value)
+        {
+            _moveSpeed = value;
+        }
+
     }
 }
