@@ -1,6 +1,8 @@
 using System;
 using Cubergy.Audio;
 using UnityEngine;
+using Cubergy.Combat;
+
 
 namespace Cubergy.Energy
 {
@@ -9,6 +11,7 @@ namespace Cubergy.Energy
         public event Action Collected;
 
         [SerializeField] private int _amount = 1;
+        [SerializeField] private int _healAmount = 1;
 
         private bool _picked;
         private SfxPlayer _sfx;
@@ -32,6 +35,10 @@ namespace Cubergy.Energy
             _picked = true;
 
             wallet.Add(_amount);
+            
+            var health = other.GetComponentInParent<PlayerHealth>();
+            health?.Heal(_healAmount);
+            
             _sfx?.PlayOneShot(_pickupClip);
 
             Collected?.Invoke();

@@ -63,8 +63,13 @@ namespace Cubergy.UI
         private void OnEnergyChanged(int _)
         {
             Refresh();
+
+            if (_forms != null && _forms.CurrentForm == PlayerForm.Form2)
+                return;
+
             _energyPop?.Play();
         }
+
 
         private void OnFormChanged(PlayerForm _)
         {
@@ -89,7 +94,20 @@ namespace Cubergy.UI
             int goal = GetGoalForCurrentForm();
 
             if (_energyText != null)
-                _energyText.text = $"Energy: {energy}/{goal}";
+            {
+                if (goal <= 0)
+                {
+                    _energyText.text = "Energy: —";
+                }
+                else
+                {
+                    int clamped = energy;
+                    if (clamped > goal)
+                        clamped = goal;
+
+                    _energyText.text = $"Energy: {clamped}/{goal}";
+                }
+            }
 
             if (_formText != null)
             {
