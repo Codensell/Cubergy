@@ -64,6 +64,7 @@ namespace Cubergy.Player
 
         [SerializeField] private float _jumpTuckThigh = -90f;
         [SerializeField] private float _jumpTuckShin = 35f;
+        [SerializeField] private PlayerForm _activeForm = PlayerForm.Form1;
 
         private bool _wasGrounded;
         private float _pushT;
@@ -90,8 +91,14 @@ namespace Cubergy.Player
 
         private void Awake()
         {
+            if (_forms == null)
+                _forms = GetComponentInParent<PlayerFormController>();
+
+            if (_movement == null)
+                _movement = GetComponentInParent<PlayerMovement>();
+            
             if (_playerRoot == null)
-                _playerRoot = transform.root;
+                _playerRoot = _forms != null ? _forms.transform : transform.root;
 
             _lastPlayerPos = _playerRoot.position;
 
@@ -117,7 +124,7 @@ namespace Cubergy.Player
 
         private void LateUpdate()
         {
-            if (_forms != null && _forms.CurrentForm != PlayerForm.Form1)
+            if (_forms == null || _forms.CurrentForm != _activeForm)
                 return;
             bool grounded = _movement != null && _movement.IsGrounded;
 

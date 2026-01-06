@@ -9,35 +9,14 @@ namespace Cubergy.Audio
         [SerializeField] private AudioClip _killConfirmed;
         [SerializeField] private float _volume = 1f;
 
-        private TargetHealth[] _targets;
-
         private void OnEnable()
         {
-            _targets = FindObjectsByType<TargetHealth>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-
-            for (int i = 0; i < _targets.Length; i++)
-            {
-                var t = _targets[i];
-                if (t == null)
-                    continue;
-
-                t.Died += OnTargetDied;
-            }
+            TargetHealth.AnyDied += OnTargetDied;
         }
 
         private void OnDisable()
         {
-            if (_targets == null)
-                return;
-
-            for (int i = 0; i < _targets.Length; i++)
-            {
-                var t = _targets[i];
-                if (t == null)
-                    continue;
-
-                t.Died -= OnTargetDied;
-            }
+            TargetHealth.AnyDied -= OnTargetDied;
         }
 
         private void OnTargetDied(TargetHealth target, DamageInstigator instigator)

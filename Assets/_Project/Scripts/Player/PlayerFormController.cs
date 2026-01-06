@@ -23,6 +23,8 @@ namespace Cubergy.Player
 
         [SerializeField] private int _toForm1Energy = 10;
         [SerializeField] private int _toForm2Energy = 10;
+        [SerializeField] private Vector3 _form1Scale = Vector3.one;
+        [SerializeField] private Vector3 _form2Scale = Vector3.one * 3f;
 
         public event Action<PlayerForm> FormChanged;
 
@@ -75,6 +77,13 @@ namespace Cubergy.Player
 
             if (_form0Bobbing != null)
                 _form0Bobbing.enabled = CurrentForm == PlayerForm.Form0;
+            
+            if (_form1Visual != null)
+                _form1Visual.transform.localScale = _form1Scale;
+
+            if (_form2Visual != null)
+                _form2Visual.transform.localScale = _form2Scale;
+
         }
         public void ForceForm(PlayerForm form, bool resetEnergy)
         {

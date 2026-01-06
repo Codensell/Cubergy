@@ -16,6 +16,13 @@ namespace Cubergy.UI
         [SerializeField] private TMP_Text _formText;
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private TMP_Text _healthText;
+        [SerializeField] private TextPopScale _healthPop;
+        [Header("Health Flash")]
+        [SerializeField] private Color _healthFlashColor = new Color(1f, 0.25f, 0.25f, 1f);
+        [SerializeField] private float _healthFlashSeconds = 2f;
+
+        private Color _healthBaseColor;
+        private Coroutine _healthFlashRoutine;
 
         private void OnEnable()
         {
@@ -26,6 +33,8 @@ namespace Cubergy.UI
                 _forms.FormChanged += OnFormChanged;
             if (_health != null)
                 _health.Changed += OnHealthChanged;
+            if (_healthText != null)
+                _healthBaseColor = _healthText.color;
 
             Refresh();
             _energyPop?.Play();
@@ -40,6 +49,15 @@ namespace Cubergy.UI
                 _forms.FormChanged -= OnFormChanged;
             if (_health != null)
                 _health.Changed -= OnHealthChanged;
+            if (_healthFlashRoutine != null)
+            {
+                StopCoroutine(_healthFlashRoutine);
+                _healthFlashRoutine = null;
+            }
+
+            if (_healthText != null)
+                _healthText.color = _healthBaseColor;
+
         }
 
         private void OnEnergyChanged(int _)
@@ -53,6 +71,17 @@ namespace Cubergy.UI
             Refresh();
             _formPop?.Play();
         }
+        private void OnHealthChanged(int _, int __)
+        {
+            Refresh();
+
+            if (_ != __)
+            {
+                _healthPop?.Play();
+                PlayHealthFlash();
+            }
+        }
+
 
         private void Refresh()
         {
@@ -74,10 +103,6 @@ namespace Cubergy.UI
                 _healthText.text = $"Health: {hp}/{max}";
             }
         }
-        private void OnHealthChanged(int _, int __)
-        {
-            Refresh();
-        }
 
         private int GetGoalForCurrentForm()
         {
@@ -92,5 +117,31 @@ namespace Cubergy.UI
                 _ => 10
             };
         }
+        private void PlayHealthFlash()
+        {
+            if (_healthText == null)
+                return;
+
+            if (_healthFlashRoutine != null)
+                StopCoroutine(_healthFlashRoutine);
+
+            _healthFlashRoutine = StartCoroutine(HealthFlashRoutine());
+        }
+
+        private System.Collections.IEnumerator HealthFlashRoutine()
+        {
+            _healthText.color = _healthFlashColor;
+
+            float s = _healthFlashSeconds;
+            if (s < 0.01f) s = 0.01f;
+
+            yield return new UnityEngine.WaitForSeconds(s);
+
+            if (_healthText != null)
+                _healthText.color = _healthBaseColor;
+
+            _healthFlashRoutine = null;
+        }
+
     }
 }
