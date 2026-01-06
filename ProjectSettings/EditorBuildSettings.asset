@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scence/Boot.unity
     guid: 1dd3f6616230f4948844716140417f27
+  - enabled: 0
+    path: Assets/_Project/Scence/Instruction.unity
+    guid: 8fffb30c59ca34f10883a0c1d7556f52
   - enabled: 1
     path: Assets/_Project/Scence/Game.unity
     guid: b88157b3b2d6548408969a187dfe625c
